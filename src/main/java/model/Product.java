@@ -9,24 +9,24 @@ package model;
  *
  * @author hp
  */
-public class Product {
-    private String id;
-    private String name;
+public class Product {//membuat class product
+    private String id;//deklarasi id dengan tipe data string
+    private String name;//deklarasi name dengan tipe data string
 
-    public String getId() {
-        return id;
+    public String getId() {//membuat function untuk mengambil data
+        return id;//mengembalikan id
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(String id) {//membuat function input id
+        this.id = id;//mengembalikan id
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() {//membuat function untuk mengambil data
+        return name;//mengembalikan name
+    }   
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String name) {//membuat function input name
+        this.name = name;//mengembalikan name
     }
 
     

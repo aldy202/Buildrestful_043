@@ -21,68 +21,67 @@ import org.springframework.web.bind.annotation.RestController;
  * @author hp
  */
 
-@RestController
+@RestController//import RestController untuk membuat response berupa REST API
 public class ProductServiceController {
-    
-    private static Map<String, Product> productRepo = new HashMap<>();
+//membuat function ProductServiceController    
+    private static Map<String, Product> productRepo = new HashMap<>();//membuat HashMap untuk menyimpan nilai variabel
     
     static {
-        Product madu = new Product();
-        madu.setId("1");
-        madu.setName("Madu");
-        productRepo.put(madu.getId(), madu);
+        Product madu = new Product();//membuat object baru untuk class
+        madu.setId("1");//mengisi variabel object setId
+        madu.setName("Madu");//mengisi variabel object setName
+        productRepo.put(madu.getId(), madu);//menyimpan/mengisi nilai ke hashmap 
         
-        Product kacang = new Product();
-        kacang.setId("2");
-        kacang.setName("Kacang");
-        productRepo.put(kacang.getId(), kacang);
+        Product kacang = new Product();//membuat object baru untuk class
+        kacang.setId("2");//mengisi variabel object setId
+        kacang.setName("Kacang");//mengisi variabel object setName
+        productRepo.put(kacang.getId(), kacang);//menyimpan/mengisi nilai ke hashmap 
         
     }
     
-    @RequestMapping(value = "/product")
-    public ResponseEntity<Object> getProduct(){
-        return new ResponseEntity<>(productRepo.values(), HttpStatus.OK);
+    @RequestMapping(value = "/product")//membuat requestmapping untuk end point hit ke postman
+    public ResponseEntity<Object> getProduct(){//membuat function ResponseEntity<Object> getProduct
+        return new ResponseEntity<>(productRepo.values(), HttpStatus.OK);//mengembalikan nilai pada productrepo
     }
     
-    @RequestMapping(value = "/product", method = RequestMethod.POST)
-    public ResponseEntity<Object> createProduct(@RequestBody Product product)
+    @RequestMapping(value = "/product", method = RequestMethod.POST)//membuat requestmapping untuk end point hit ke postman
+    public ResponseEntity<Object> createProduct(@RequestBody Product product)//membuat function untuk create product
     {
-        if(productRepo.containsKey(product.getId()))
+        if(productRepo.containsKey(product.getId()))//membuat statment if else untuk mengecek Id apakah sudah pernah keisi sama atau belum
         {
-            return new ResponseEntity<>("product id has been created", HttpStatus.OK);
+            return new ResponseEntity<>("product id has been created", HttpStatus.OK);//mengembalikan nilai dan pesan yang akan disampaikan
                     
-        }else{
-            productRepo.put(product.getId(), product);
-            return new ResponseEntity<>("Product is create successfully", HttpStatus.CREATED);
+        }else{//membuat statment if else untuk mengecek Id apakah sudah pernah keisi sama atau belum
+            productRepo.put(product.getId(), product);//menyimpan nilai variabel pada productrepo
+            return new ResponseEntity<>("Product is create successfully", HttpStatus.CREATED);//mengembalikan nilai dan pesan yang akan disampaikan
             
         }
                   
     }
     
-    @RequestMapping(value = "/product/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/product/{id}", method = RequestMethod.PUT)//membuat requestmapping untuk end point hit ke postman
     public ResponseEntity<Object> updateProduct(@PathVariable("id")String id, @RequestBody Product product)
+            //membuat function untuk edit data
     {
-        if(!productRepo.containsKey(id)){
-            return new ResponseEntity<>("Product id data not found", HttpStatus.OK);
+        if(!productRepo.containsKey(id)){       //membuat if else untuk mengecek apakah id sudah pernah kebuat atau belum
+            return new ResponseEntity<>("Product id data not found", HttpStatus.OK); //mengembalikan nilai dan pesan yang akan disampaikan
             
-        }else{
-            productRepo.remove(id);
-            product.setId(id);
-            productRepo.put(id, product);
-            return new ResponseEntity<>("Product is update successfully", HttpStatus.OK);
+        }else{          //jika id ada dan bisa di edit
+            productRepo.remove(id);//menghapus isi id sesuai id
+            product.setId(id);//melihat id yang akan di edit
+            productRepo.put(id, product);//menyimpan kembali id dan nama product
+            return new ResponseEntity<>("Product is update successfully", HttpStatus.OK);//mengembalikan nilai dan pesan yang akan disampaikan
             
         }
         
-        
-            
-            
-            
+   
     }
     
-    @RequestMapping(value = "/product/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/product/{id}", method = RequestMethod.DELETE)//membuat requestmapping untuk end point hit ke postman
     public ResponseEntity<Object> delete(@PathVariable("id") String id){
-        productRepo.remove(id);
-        return new ResponseEntity<>("Product is deleted successfully", HttpStatus.OK);
+        //membuat function untuk delete
+        productRepo.remove(id);//menghapus isi id sesuai id
+        return new ResponseEntity<>("Product is deleted successfully", HttpStatus.OK);//mengembalikan nilai dan pesan yang akan disampaikan
     }
     
     
