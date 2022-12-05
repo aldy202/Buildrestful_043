@@ -47,13 +47,16 @@ public class ProductServiceController {
     @RequestMapping(value = "/product", method = RequestMethod.POST)
     public ResponseEntity<Object> createProduct(@RequestBody Product product)
     {
-             
-        
+        if(productRepo.containsKey(product.getId()))
+        {
+            return new ResponseEntity<>("product id has been created", HttpStatus.OK);
+                    
+        }else{
             productRepo.put(product.getId(), product);
             return new ResponseEntity<>("Product is create successfully", HttpStatus.CREATED);
-        
-              
             
+        }
+                  
     }
     
     @RequestMapping(value = "/product/{id}", method = RequestMethod.PUT)
