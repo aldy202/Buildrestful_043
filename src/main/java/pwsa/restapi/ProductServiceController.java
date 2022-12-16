@@ -30,17 +30,27 @@ public class ProductServiceController {
         Product madu = new Product();//membuat object baru untuk class
         madu.setId("1");//mengisi variabel object setId
         madu.setName("Madu");//mengisi variabel object setName
+        madu.setPrice(5000);
+        madu.setDisc(5);
+        double total = madu.getPrice()-(madu.getPrice()*(madu.getDisc()/100));
+        madu.setTotal(total);
         productRepo.put(madu.getId(), madu);//menyimpan/mengisi nilai ke hashmap 
         
         Product kacang = new Product();//membuat object baru untuk class
         kacang.setId("2");//mengisi variabel object setId
         kacang.setName("Kacang");//mengisi variabel object setName
+        kacang.setPrice(5000);
+        kacang.setDisc(5);
+        total = kacang.getPrice()-(kacang.getPrice()*(kacang.getDisc()/100));
+        kacang.setTotal(total);
         productRepo.put(kacang.getId(), kacang);//menyimpan/mengisi nilai ke hashmap 
         
     }
     
     @RequestMapping(value = "/product")//membuat requestmapping untuk end point hit ke postman
     public ResponseEntity<Object> getProduct(){//membuat function ResponseEntity<Object> getProduct
+        
+        
         return new ResponseEntity<>(productRepo.values(), HttpStatus.OK);//mengembalikan nilai pada productrepo
     }
     
@@ -49,9 +59,13 @@ public class ProductServiceController {
     {
         if(productRepo.containsKey(product.getId()))//membuat statment if else untuk mengecek Id apakah sudah pernah keisi sama atau belum
         {
+            
             return new ResponseEntity<>("product id has been created", HttpStatus.OK);//mengembalikan nilai dan pesan yang akan disampaikan
                     
-        }else{//membuat statment if else untuk mengecek Id apakah sudah pernah keisi sama atau belum
+        }else{//membuat statment if else untuk mengecek Id apakah sudah pernah keisi sama atau belum 
+            double total = product.getPrice()-(product.getPrice()*(product.getDisc()/100));
+            
+            product.setTotal(total);
             productRepo.put(product.getId(), product);//menyimpan nilai variabel pada productrepo
             return new ResponseEntity<>("Product is create successfully", HttpStatus.CREATED);//mengembalikan nilai dan pesan yang akan disampaikan
             
